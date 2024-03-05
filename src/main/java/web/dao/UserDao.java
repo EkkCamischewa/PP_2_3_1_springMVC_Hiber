@@ -6,25 +6,23 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
-public class UserDao {
+public class UserDao implements UserDaoInt {
 
 
     @PersistenceContext
     private EntityManager entityManager;
 
-
-    public List<User> getAllUser(){
+    public List<User> getAllUsers(){
         return entityManager
                 .createQuery("from User", User.class)
                 .getResultList();
     }
 
-    @Transactional
+
+
     public User getParticularUser(Long id){
         return entityManager.find(User.class, id);
     }
@@ -33,11 +31,9 @@ public class UserDao {
         entityManager.persist(user);
     }
 
-    @Transactional
     public void updateUser(User user){
         entityManager.merge(user);
     }
-
 
     public void deleteUser(Long id) {
         entityManager.remove(getParticularUser(id));

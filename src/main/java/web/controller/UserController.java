@@ -5,16 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
-import web.service.UserService;
+import web.service.UserServiceInt;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
+    private final UserServiceInt userService;
 
     @Autowired
-    private UserService userService;
+    UserController(UserServiceInt userService){
+        this.userService=userService;
+    }
 
     @GetMapping("/all")
     public String getAllPeople(Model model) {
